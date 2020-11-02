@@ -77,6 +77,12 @@ factory(original: any, backup: any = ''): any {
 - `blob`转文件并下载
 
 ```js
+
+export interface Base64 {
+    dataUrl: string;
+    type: string;
+    ext: string;
+}
  downloadBlob(blob: Blob, fileName?: string) {
         // const blob = new Blob([_file_data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
         const isBlob = blob instanceof Blob;
@@ -94,9 +100,9 @@ factory(original: any, backup: any = ''): any {
         // 释放URL地址
         URL.revokeObjectURL(objectUrl);
     }
-    ```
+```
     
-    - 删除对象中指定属性`keys`为被删除属性名
+- 删除对象中指定属性`keys`为删除属性名
 
 ```js
    isObjectDelKay(obj, keys) {
@@ -121,3 +127,36 @@ factory(original: any, backup: any = ''): any {
         return obj;
     }
 ```
+
+- 深度复制
+
+```js
+    deepClone(obj) {
+        if (null == obj || 'object' !== typeof obj) {
+            return obj;
+        }
+        if (obj instanceof Date) {
+            const copy = new Date();
+            copy.setTime(obj.getTime());
+            return copy;
+        }
+        if (obj instanceof Array) {
+            const copy = [];
+            for (let i = 0, len = obj.length; i < len; ++i) {
+                copy[i] = this.isClone(obj[i]);
+            }
+            return copy;
+        }
+        if (obj instanceof Object) {
+            const copy = {};
+            for (const attr in obj) {
+                if (obj.hasOwnProperty(attr)) {
+                    copy[attr] = this.isClone(obj[attr]);
+                }
+            }
+            return copy;
+        }
+        throw new Error("Unable to copy obj! Its type isn't supported.");
+    }
+```
+    
