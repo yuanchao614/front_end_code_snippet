@@ -59,8 +59,8 @@ factory(original: any, backup: any = ''): any {
   ```
   
   - `base64`转`blob`
-  
-  ```js
+
+```js
      convertBase64UrlToBlob(base64: Base64): Blob {
         const parts = base64.dataUrl.split(';base64,');
         const contentType = parts[0].split(':')[1];
@@ -72,3 +72,26 @@ factory(original: any, backup: any = ''): any {
         }
         return new Blob([uInt8Array], { type: contentType });
     }
+```
+
+- `blob`转文件并下载
+
+```js
+ downloadBlob(blob: Blob, fileName?: string) {
+        // const blob = new Blob([_file_data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        const isBlob = blob instanceof Blob;
+        if (!isBlob) {
+            return;
+        }
+        const objectUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        document.body.appendChild(a);
+        a.setAttribute('style', 'display:none');
+        a.setAttribute('href', objectUrl);
+        a.setAttribute('download', fileName || `${Date.now()}.jpg`);
+        a.click();
+        document.body.removeChild(a);
+        // 释放URL地址
+        URL.revokeObjectURL(objectUrl);
+    }
+    ```
