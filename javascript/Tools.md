@@ -1,4 +1,10 @@
-工具类代码片段
+
+---
+title: Tools
+tags: javascrpt,typescript
+---
+
+项目中常用的工具类代码片段
 
 - 判断初始值是否为所需类型，不是则返回备用值.
 
