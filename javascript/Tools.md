@@ -95,3 +95,29 @@ factory(original: any, backup: any = ''): any {
         URL.revokeObjectURL(objectUrl);
     }
     ```
+    
+    - 删除对象中指定属性`keys`为被删除属性名
+
+```js
+   isObjectDelKay(obj, keys) {
+        if (!Array.isArray(obj)) {
+            for (const i in obj) {
+                if (obj.hasOwnProperty(i)) {
+                    if (i === keys) {
+                        delete obj[i];
+                    }
+                    if (Array.isArray(obj[i])) {
+                        this.isObjectDelKay(obj[i], keys);
+                    }
+                }
+            }
+        } else {
+            for (const i in obj) {
+                if (obj.hasOwnProperty(i)) {
+                    this.isObjectDelKay(obj[i], keys);
+                }
+            }
+        }
+        return obj;
+    }
+```
