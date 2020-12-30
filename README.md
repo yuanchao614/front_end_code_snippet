@@ -12,6 +12,8 @@ Record my front end code snippet
 
 ### Bunble sort
 
+![Algorithm Visualization](https://upload.wikimedia.org/wikipedia/commons/c/c8/Bubble-sort-example-300px.gif)
+
 ```javascript
     bunbleSort(originalArray) {
         if (originalArray.length <= 1) {
@@ -29,6 +31,8 @@ Record my front end code snippet
 ```
 
 ### Selection sort
+
+![Algorithm Visualization](https://upload.wikimedia.org/wikipedia/commons/9/94/Selection-Sort-Animation.gif)
 
 ```js
    selectionSort(originalArray) {
@@ -52,6 +56,8 @@ Record my front end code snippet
 ```
 
 ### Insert sort
+
+![Algorithm Visualization](https://upload.wikimedia.org/wikipedia/commons/0/0f/Insertion-sort-example-300px.gif)
 
 ```js
   insertSort(originalArray) {
@@ -77,6 +83,8 @@ Record my front end code snippet
 ```
 
 ### Merge sort
+
+![Merge Sort](https://upload.wikimedia.org/wikipedia/commons/c/cc/Merge-sort-example-300px.gif)
 
 ```js
  mergeSort(originalArray) {
