@@ -9,8 +9,8 @@ Record my front end code snippet
   - [Quick sort](#quick-sort)
   
 - [Angular](#angular)
-  - [elementRef 为选择器添加class](#add-calss-for-selector)
-  - [TemplateRef 模板语法的使用](#TemplateRef)
+  - [elementRef 为选择器添加class](#elementRef-为选择器添加class)
+  - [TemplateRef 模板语法的使用](#TemplateRef-模板语法的使用)
   
 - [Rx.js](#rx.js)
   - [rxjs通信与浏览器跨窗口通信](#rxjs通信与浏览器跨窗口通信)
@@ -238,11 +238,6 @@ export class NzCardMetaComponent {
 ### rxjs通信与浏览器跨窗口通信
 
 ```ts
-/**
- * @author: hhr
- * @time: 2018-04-19 10:48:58
- * @description: Observable·global
- */
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { MESSAGE_CHANNEL, SYSTEM_EVENT } from 'app/app.constants';
