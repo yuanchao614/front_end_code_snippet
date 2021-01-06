@@ -12,6 +12,9 @@ Record my front end code snippet
   - [elementRef 为选择器添加class](#elementRef-为选择器添加class)
   - [TemplateRef 模板语法的使用](#TemplateRef-模板语法的使用)
   
+- [Vue](#vue)
+  - [provide/inject](#provide/inject)
+  
 - [Rx.js](#rx.js)
   - [rxjs通信与浏览器跨窗口通信](#rxjs通信与浏览器跨窗口通信)
   
@@ -232,6 +235,23 @@ export class NzCardMetaComponent {
       <img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />
     </ng-template>
 ```
+
+## Vue
+
+### provide/inject
+
+> provie/inject可实现多层组件嵌套的前提下跨组件通信，只需要在根级组件provide在后代的任何组件中inject便可获取根级组件的数据
+
+```js
+import { provide } from 'vue'
+provie(key, value)
+
+import { inject } from 'vue'
+inject(key)
+```
+
+* 必须在setup()中使用
+* 如果不传入响应式数据默认情况下数据不是响应式的
 
 ## Rx.js
 
