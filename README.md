@@ -8,6 +8,9 @@ Record my front end code snippet
   - [Merge sort](#merge-sort)
   - [Quick sort](#quick-sort)
   
+ - [Javascript](#javascript)
+  - [Base64与ArrayBuffer的相互转换](#Base64与ArrayBuffer的相互转换)
+  
 - [Angular](#angular)
   - [elementRef 为选择器添加class](#elementRef-为选择器添加class)
   - [TemplateRef 模板语法的使用](#TemplateRef-模板语法的使用)
@@ -168,6 +171,38 @@ sort(originalArray) {
         // console.log(leftArraySorted.concat(centerArray, rightArraySorted));
         return leftArraySorted.concat(centerArray, rightArraySorted);
       }
+```
+
+## JavaScript
+
+### Base64与ArrayBuffer的相互转换
+
+```js
+function base64ToUint8Array(base64String) {
+　　　　const padding = '='.repeat((4 - base64String.length % 4) % 4);
+       const base64 = (base64String + padding)
+                    .replace(/\-/g, '+')
+                    .replace(/_/g, '/');
+
+       const rawData = window.atob(base64);
+       const outputArray = new Uint8Array(rawData.length);
+
+       for (let i = 0; i < rawData.length; ++i) {
+            outputArray[i] = rawData.charCodeAt(i);
+       }
+       return outputArray;
+}
+
+
+function arrayBufferToBase64(buffer) {
+         let binary = '';
+         const bytes = new Uint8Array(buffer);
+         const len = bytes.byteLength;
+         for (let i = 0; i < len; i++) {
+               binary += String.fromCharCode(bytes[i]);
+         }
+         return window.btoa(binary);
+}
 ```
 
 ## Angular
