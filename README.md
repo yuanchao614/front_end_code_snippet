@@ -9,7 +9,7 @@ Record my front end code snippet
   - [Quick sort](#quick-sort)
   
  - [Javascript](#javascript)
-  - [Base64与ArrayBuffer的相互转换](#Base64与ArrayBuffer的相互转换)
+   - [Base64与ArrayBuffer的相互转换](#Base64与ArrayBuffer的相互转换)
   
 - [Angular](#angular)
   - [elementRef 为选择器添加class](#elementRef-为选择器添加class)
