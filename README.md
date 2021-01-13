@@ -10,6 +10,8 @@ Record my front end code snippet
   
  - [Javascript](#javascript)
    - [Base64与ArrayBuffer的相互转换](#Base64与ArrayBuffer的相互转换)
+   - [Blob转文件带下载](#Blob转文件带下载)
+   - [Base64转Blob](#Base64转Blob)
   
 - [Angular](#angular)
   - [elementRef 为选择器添加class](#elementRef-为选择器添加class)
@@ -203,6 +205,48 @@ function arrayBufferToBase64(buffer) {
          }
          return window.btoa(binary);
 }
+```
+
+### Blob转文件带下载
+
+```ts
+    /**
+     * bold转文件带下载
+     * @param _file_data || blob 文件流
+     * @param _file_name 下载文件名称指定
+     */
+   blobDownloadFile(blob: Blob, fileName?: string) {
+        const isBlob = blob instanceof Blob;
+        if (!isBlob) {
+            return;
+        }
+        const objectUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        document.body.appendChild(a);
+        a.setAttribute('style', 'display:none');
+        a.setAttribute('href', objectUrl);
+        a.setAttribute('download', fileName || `${Date.now()}.jpg`);
+        a.click();
+        document.body.removeChild(a);
+        // 释放URL地址
+        URL.revokeObjectURL(objectUrl);
+    }
+```
+
+### Base64转Blob
+
+```ts
+  convertBase64UrlToBlob(base64: Base64): Blob {
+        const parts = base64.dataUrl.split(';base64,');
+        const contentType = parts[0].split(':')[1];
+        const raw = window.atob(parts[1]);
+        const rawLength = raw.length;
+        const uInt8Array = new Uint8Array(rawLength);
+        for (let i = 0; i < rawLength; i++) {
+            uInt8Array[i] = raw.charCodeAt(i);
+        }
+        return new Blob([uInt8Array], { type: contentType });
+    }
 ```
 
 ## Angular
