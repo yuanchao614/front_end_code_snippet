@@ -8,6 +8,9 @@ Record my front end code snippet
   - [Merge sort](#merge-sort)
   - [Quick sort](#quick-sort)
   
+- [CSS](#css)
+  - [更改图片颜色](#更改图片颜色)
+  
  - [Javascript](#javascript)
    - [Base64与ArrayBuffer的相互转换](#Base64与ArrayBuffer的相互转换)
    - [Blob转文件带下载](#Blob转文件带下载)
@@ -174,6 +177,36 @@ sort(originalArray) {
         return leftArraySorted.concat(centerArray, rightArraySorted);
       }
 ```
+
+## CSS
+
+### 更改图片颜色
+
+```HTML
+<p><strong>原始图标</strong></p>
+<i class="icon icon-del"></i>
+<p><strong>可以变色的图标</strong></p>
+<i class="icon"><i class="icon icon-del"></i></i>
+```
+
+```CSS
+.icon {
+    display: inline-block;
+    width: 20px; height: 20px;
+    overflow: hidden;
+}
+.icon-del {
+    background: url(delete.png) no-repeat center;
+}
+.icon > .icon {
+    position: relative;
+    left: -20px;
+    border-right: 20px solid transparent;
+    -webkit-filter: drop-shadow(20px 0);
+    filter: drop-shadow(20px 0);
+}
+```
+[参考链接](https://www.zhangxinxu.com/study/201606/png-icon-color-fill.html)
 
 ## JavaScript
 
