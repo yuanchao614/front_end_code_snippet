@@ -19,6 +19,7 @@ Record my front end code snippet
 - [Angular](#angular)
   - [elementRef 为选择器添加class](#elementRef-为选择器添加class)
   - [TemplateRef 模板语法的使用](#TemplateRef-模板语法的使用)
+  - [Angular项目中使用翻译](#Angular项目中使用翻译)
   
 - [Vue](#vue)
   - [provide/inject](#provide/inject)
@@ -347,6 +348,74 @@ export class NzCardMetaComponent {
       <img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />
     </ng-template>
 ```
+
+### Angular项目中使用翻译
+
+* 1.app.module.ts 导入相应模块
+
+```ts
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+// 导出加载json文件
+export function createTranslateLoader(http: HttpClient) {
+    return new TranslateHttpLoader(http, '/assets/i18n/', '.json');
+}
+
+    imports: [
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: createTranslateLoader,
+                deps: [HttpClient]
+            }
+        })
+       ...
+    ],
+    declarations: [
+        AppComponent,
+       ...
+    ],
+    providers: [
+    ],
+    bootstrap: [AppComponent]
+})
+```
+
+* app.components.ts中使用
+
+```ts
+import { TranslateService } from '@ngx-translate/core';
+
+   constructor(
+        private translate: TranslateService
+    ) {
+        // add support lang
+        this.translate.addLangs(['en', 'ar']);
+
+        // Sets the default language, usually used when a match cannot be made
+        this.translate.setDefaultLang('en');
+        
+        //获取当前浏览器环境的语言比如en、 zh
+        let browserLang = translate.getBrowserLang();
+        translate.use(browserLang.match(/en|zh/) ? browserLang : 'en');
+    }
+```
+
+* html或者components中使用
+
+```thml
+<div class="remove-multiple-tips">{{ 'EquipsDetail.DmsDetail.RemoveMultipleTips' | translate}}</div>
+```
+
+```ts
+this.translate.get('EquipsDetail.DmsDetail.RemoveMultipleTips').subscrible(res => {
+console.log(res)
+})
+```
+
+
 
 ## Vue
 
