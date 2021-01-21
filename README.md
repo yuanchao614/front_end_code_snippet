@@ -15,6 +15,9 @@ Record my front end code snippet
    - [Base64与ArrayBuffer的相互转换](#Base64与ArrayBuffer的相互转换)
    - [Blob转文件带下载](#Blob转文件带下载)
    - [Base64转Blob](#Base64转Blob)
+   - [将数字四舍五入到固定的小数点](#将数字四舍五入到固定的小数点)
+   - [判断给的日期是否为工作日](#判断给的日期是否为工作日)
+   - [转换华氏/摄氏](#转换华氏/摄氏)
   
 - [Angular](#angular)
   - [elementRef 为选择器添加class](#elementRef-为选择器添加class)
@@ -281,6 +284,45 @@ function arrayBufferToBase64(buffer) {
         }
         return new Blob([uInt8Array], { type: contentType });
     }
+```
+
+### 将数字四舍五入到固定的小数点
+
+```js
+const toFixed = (n, fixed) => ~~(Math.pow(10, fixed) * n) / Math.pow(10, fixed);
+// Examples
+toFixed(25.198726354, 1);       // 25.1
+toFixed(25.198726354, 2);       // 25.19
+toFixed(25.198726354, 3);       // 25.198
+toFixed(25.198726354, 4);       // 25.1987
+toFixed(25.198726354, 5);       // 25.19872
+toFixed(25.198726354, 6);       // 25.198726
+```
+
+### 判断给的日期是否为工作日
+
+> getDay() 方法根据本地时间，返回一个具体日期中一周的第几天，0 表示星期天。
+
+```js
+const isWeekday = (date) => date.getDay() % 6 !== 0;
+console.log(isWeekday(new Date(2021, 0, 11)));
+// Result: true (Monday)
+console.log(isWeekday(new Date(2021, 0, 10)));
+// Result: false (Sunday)
+```
+
+### 转换华氏/摄氏
+
+```js
+
+const celsiusToFahrenheit = (celsius) => celsius * 9/5 + 32;
+const fahrenheitToCelsius = (fahrenheit) => (fahrenheit - 32) * 5/9;
+// Examples
+celsiusToFahrenheit(15);    // 59
+celsiusToFahrenheit(0);     // 32
+celsiusToFahrenheit(-20);   // -4
+fahrenheitToCelsius(59);    // 15
+fahrenheitToCelsius(32);    // 0
 ```
 
 ## Angular
