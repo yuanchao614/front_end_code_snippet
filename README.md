@@ -18,6 +18,7 @@ Record my front end code snippet
    - [将数字四舍五入到固定的小数点](#将数字四舍五入到固定的小数点)
    - [判断给的日期是否为工作日](#判断给的日期是否为工作日)
    - [转换华氏/摄氏](#转换华氏/摄氏)
+   - [根据路径获取对象的指定属性的值](#根据路径获取对象的指定属性的值)
   
 - [Angular](#angular)
   - [elementRef 为选择器添加class](#elementRef-为选择器添加class)
@@ -323,6 +324,18 @@ celsiusToFahrenheit(0);     // 32
 celsiusToFahrenheit(-20);   // -4
 fahrenheitToCelsius(59);    // 15
 fahrenheitToCelsius(32);    // 0
+```
+
+### 根据路径获取对象的指定属性的值
+
+```ts
+    getValueByPath(obj: any, paths = ''): unknown {
+        let ret: unknown = obj;
+        paths.split('.').map(path => {
+            ret = ret[path];
+        });
+        return ret;
+    }
 ```
 
 ## Angular
