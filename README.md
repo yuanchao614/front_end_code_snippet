@@ -19,6 +19,7 @@ Record my front end code snippet
    - [判断给的日期是否为工作日](#判断给的日期是否为工作日)
    - [转换华氏/摄氏](#转换华氏/摄氏)
    - [根据路径获取对象的指定属性的值](#根据路径获取对象的指定属性的值)
+   - [setTimeout与setInterval的相互实现](#setTimeout与setInterval的相互实现)
   
 - [Angular](#angular)
   - [elementRef 为选择器添加class](#elementRef-为选择器添加class)
@@ -336,6 +337,34 @@ fahrenheitToCelsius(32);    // 0
         });
         return ret;
     }
+```
+
+### setTimeout与setInterval的相互实现
+
+```js
+// setinterval实现setTimeout
+
+const mySetTimeout = (callback, time) => {
+  const timer = setInterval(() => {
+     clearInterval(timer)
+     callback()
+  }, time)
+}
+
+// setTimeout实现setInterval
+
+ const mySetInterval = (callback, time) => {
+        (function inner() {
+            const timer = setTimeout(() => {
+                callback();
+                clearInterval(timer);
+                inner();
+            }, time);
+        })();
+    }
+
+mySetTimeout(() => {console.log(123)}, 2000) // 2秒后输出123
+mySetInterval(() => {console.log(123)}, 2000) // 每隔2秒输出一次123
 ```
 
 ## Angular
