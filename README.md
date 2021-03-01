@@ -20,6 +20,17 @@ Record my front end code snippet
    - [转换华氏/摄氏](#转换华氏/摄氏)
    - [根据路径获取对象的指定属性的值](#根据路径获取对象的指定属性的值)
    - [setTimeout与setInterval的相互实现](#setTimeout与setInterval的相互实现)
+   - [根据对象数组的指定属性求平均数](#根据对象数组的指定属性求平均数)
+   - [字符串单词首字母全大写](#字符串单词首字母全大写)
+   - [统计数组中某个值出现的次数](#统计数组中某个值出现的次数)
+   - [接收两个DOM元素对象参数，判断后者是否是前者的子元素](#接收两个DOM元素对象参数，判断后者是否是前者的子元素)
+   - [按照给定的函数条件，查找第一个满足条件对象的键值](#按照给定的函数条件，查找第一个满足条件对象的键值)
+   - [按照指定数组的深度，将嵌套数组进行展平](#按照指定数组的深度，将嵌套数组进行展平)
+   - [返回两个日期之间相差多少天](#返回两个日期之间相差多少天)
+   - [返回DOM元素是否包含指定的Class样式](#返回DOM元素是否包含指定的Class样式)
+   - [隐藏指定的DOM元素](#隐藏指定的DOM元素)
+   - [在给定的DOM节点后插入新的节点内容](#在给定的DOM节点后插入新的节点内容)
+   - [在给定的DOM节点前插入新的节点内容](#在给定的DOM节点前插入新的节点内容)
   
 - [Angular](#angular)
   - [elementRef 为选择器添加class](#elementRef-为选择器添加class)
@@ -366,6 +377,111 @@ const mySetTimeout = (callback, time) => {
 mySetTimeout(() => {console.log(123)}, 2000) // 2秒后输出123
 mySetInterval(() => {console.log(123)}, 2000) // 每隔2秒输出一次123
 ```
+
+### 根据对象数组的指定属性求平均数
+
+```js
+const averageBy = (arr, fn) =>
+  arr.map(typeof fn === 'function' ? fn : val => val[fn]).reduce((acc, val) => acc + val, 0) /
+  arr.length;
+  
+averageBy([{ n: 4 }, { n: 2 }, { n: 8 }, { n: 6 }], o => o.n); // 5
+averageBy([{ n: 4 }, { n: 2 }, { n: 8 }, { n: 6 }], 'n'); // 5
+```
+
+### 字符串单词首字母全大写
+
+```js
+const capitalizeEveryWord = str => str.replace(/\b[a-z]/g, char => char.toUpperCase());
+```
+
+### 统计数组中某个值出现的次数
+
+```js
+const countOccurrences = (arr, val) => arr.reduce((a, v) => (v === val ? a + 1 : a), 0);
+countOccurrences([1, 2, 1, 3, 1, 5, 1], 1) // 4
+```
+
+### 接收两个DOM元素对象参数，判断后者是否是前者的子元素。
+
+```js
+
+const elementContains = (parent, child) => parent !== child && parent.contains(child);
+
+elementContains(document.querySelector('head'), document.querySelector('title')); // true
+elementContains(document.querySelector('body'), document.querySelector('body')); // false
+```
+
+### 按照给定的函数条件，查找第一个满足条件对象的键值
+
+```js
+const findKey = (obj, fn) => Object.keys(obj).find(key => fn(obj[key], key, obj));
+
+findKey(
+  {
+    barney: { age: 36, active: true },
+    fred: { age: 40, active: false },
+    pebbles: { age: 1, active: true }
+  },
+  o => o['active']
+); // 'barney'
+```
+
+### 按照指定数组的深度，将嵌套数组进行展平
+
+```js
+// 默认深度为一层
+const flatten = (arr, depth = 1) =>
+  arr.reduce((a, v) => a.concat(depth > 1 && Array.isArray(v) ? flatten(v, depth - 1) : v), []);
+
+flatten([1, [2], 3, 4]); // [1, 2, 3, 4]
+flatten([1, [2, [3, [4, 5], 6], 7], 8], 2); // [1, 2, 3, [4, 5], 6, 7, 8]
+```
+
+### 返回两个日期之间相差多少天
+
+```js
+
+const getDaysDiffBetweenDates = (dateInitial, dateFinal) =>
+  (dateFinal - dateInitial) / (1000 * 3600 * 24);
+  
+getDaysDiffBetweenDates(new Date('2019-01-13'), new Date('2019-01-15')); // 2
+```
+
+### 返回DOM元素是否包含指定的Class样式
+
+```js
+
+const hasClass = (el, className) => el.classList.contains(className);
+hasClass(document.querySelector('p.special'), 'special'); // true
+```
+
+### 隐藏指定的DOM元素
+
+```js
+
+const hide = (...el) => [...el].forEach(e => (e.style.display = 'none'));
+
+hide(document.querySelectorAll('img')); // Hides all <img> elements on the page
+```
+
+### 在给定的DOM节点后插入新的节点内容
+
+```js
+const insertAfter = (el, htmlString) => el.insertAdjacentHTML('afterend', htmlString);
+
+insertAfter(document.getElementById('myId'), '<p>after</p>'); // <div id="myId">...</div> <p>after</p>
+```
+
+### 在给定的DOM节点前插入新的节点内容
+
+```js
+const insertBefore = (el, htmlString) => el.insertAdjacentHTML('beforebegin', htmlString);
+
+insertBefore(document.getElementById('myId'), '<p>before</p>'); // <p>before</p> <div id="myId">...</div>
+```
+
+
 
 ## Angular
 
