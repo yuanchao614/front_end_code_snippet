@@ -31,6 +31,7 @@ Record my front end code snippet
    - [隐藏指定的DOM元素](#隐藏指定的DOM元素)
    - [在给定的DOM节点后插入新的节点内容](#在给定的DOM节点后插入新的节点内容)
    - [在给定的DOM节点前插入新的节点内容](#在给定的DOM节点前插入新的节点内容)
+   - [返回两个数组的交集](#返回两个数组的交集)
   
 - [Angular](#angular)
   - [elementRef 为选择器添加class](#elementRef-为选择器添加class)
@@ -479,6 +480,18 @@ insertAfter(document.getElementById('myId'), '<p>after</p>'); // <div id="myId">
 const insertBefore = (el, htmlString) => el.insertAdjacentHTML('beforebegin', htmlString);
 
 insertBefore(document.getElementById('myId'), '<p>before</p>'); // <p>before</p> <div id="myId">...</div>
+```
+
+### 返回两个数组的交集
+
+```js
+
+const intersection = (a, b) => {
+  const s = new Set(b);
+  return a.filter(x => s.has(x));
+};
+
+intersection([1, 2, 3], [4, 3, 2]); // [2, 3]
 ```
 
 
