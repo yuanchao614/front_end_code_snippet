@@ -32,7 +32,7 @@ Record my front end code snippet
    - [在给定的DOM节点后插入新的节点内容](#在给定的DOM节点后插入新的节点内容)
    - [在给定的DOM节点前插入新的节点内容](#在给定的DOM节点前插入新的节点内容)
    - [返回两个数组的交集](#返回两个数组的交集)
-   - [JavaScript实现js/css链接的添加](#JavaScript实现js/css链接的添加)
+   - [JavaScript实现js/css链接的添加](#javaScript实现js/css链接的添加)
   
 - [Angular](#angular)
   - [elementRef 为选择器添加class](#elementRef-为选择器添加class)
@@ -495,7 +495,7 @@ const intersection = (a, b) => {
 intersection([1, 2, 3], [4, 3, 2]); // [2, 3]
 ```
 
-### JavaScript实现js/css链接的添加
+### javaScript实现js/css链接的添加
 
 ```ts
 const loadStyle = (url: string) => {
@@ -652,7 +652,7 @@ console.log(res)
 
 
 
-## Vue
+## Vue/Vue3
 
 ### provide/inject
 
@@ -668,6 +668,39 @@ inject(key)
 
 * 必须在setup()中使用
 * 如果不传入响应式数据默认情况下数据不是响应式的
+
+### Vue3 props参数使用interface
+
+```ts
+import {
+  ...,
+  PropType
+} from "vue";
+export interface UpdateUser {
+    _id: string,
+    userName: string,
+    email: string,
+    passWord: string,
+    userType: string
+    createdDate: Date,
+    updatedDate: Date
+}
+....
+  props: {
+    viewUserVisible: {
+      type: Boolean,
+      default: false
+    },
+    action: {
+      type: String,
+      default: "create"
+    },
+    userData: {
+      type: Object as PropType<UpdateUser>,
+      required: true
+    }
+  }
+```
 
 ## Rx.js
 
