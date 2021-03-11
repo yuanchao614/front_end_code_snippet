@@ -653,6 +653,7 @@ console.log(res)
 
 ### NGZORRO模态框实现拖拽
 
+directive.ts
 ```ts
 import { Directive, ElementRef, HostListener, AfterViewInit, Renderer2 } from '@angular/core';
 
@@ -725,6 +726,12 @@ export class DragModalDirective implements AfterViewInit {
 
 // thml
 
+```
+
+componet.thml
+
+```html
+
 <nz-modal
         appDragModal
         id="addOrEdit"
@@ -741,8 +748,6 @@ export class DragModalDirective implements AfterViewInit {
 ....
 
 </nz-modal>
-
-
 ```
 
 
