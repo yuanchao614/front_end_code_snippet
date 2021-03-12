@@ -689,9 +689,11 @@ export class DragModalDirective implements AfterViewInit {
         });
         this.render.listen(modalTitleElement, 'mouseup', (event) => {
             this.canMove = false;
+            this.render.setStyle(modalElement, 'cursor', `default`);
         });
         this.render.listen(this.elementRef.nativeElement, 'mousemove', (event) => {
             if (this.canMove) {
+                this.render.setStyle(modalElement, 'cursor', `move`);
                 let moveX = event.clientX - this.distX;
                 let moveY = event.clientY - this.distY;
                 const modalWidth = modalElement.offsetWidth;
