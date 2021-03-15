@@ -42,6 +42,7 @@ Record my front end code snippet
   
 - [Vue](#vue)
   - [provide/inject](#provide/inject)
+  - [Vue3反向代理解决跨域问题](#Vue3反向代理解决跨域问题)
   
 - [Rx.js](#rx.js)
   - [rxjs通信与浏览器跨窗口通信](#rxjs通信与浏览器跨窗口通信)
@@ -802,6 +803,27 @@ export interface UpdateUser {
       required: true
     }
   }
+```
+
+### Vue3反向代理解决跨域问题
+
+````js
+// vue.config.js
+module.exports = {
+  devServer: {
+      proxy: {
+          '/api': {
+              target: 'http://localhost:3000',  //  重新映射到后端接口的接口地址 
+              // port: 3000,
+              ws: true,  // 是否启用websockets
+              secure: false,
+              changeOrigin: true, //开启代理：在本地会创建一个虚拟服务端，然后发送请求的数据，并同时接收请求的数据，这样服务端和服务端进行数据的交互就不会有跨域问题
+              pathRewrite: {'^/api': '/'} // 去掉接口地址中的api字符串
+          }
+          }
+}
+}
+
 ```
 
 ## Rx.js
