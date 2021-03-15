@@ -807,7 +807,7 @@ export interface UpdateUser {
 
 ### Vue3反向代理解决跨域问题
 
-````js
+```js
 // vue.config.js
 module.exports = {
   devServer: {
@@ -823,7 +823,6 @@ module.exports = {
           }
 }
 }
-
 ```
 
 ## Rx.js
