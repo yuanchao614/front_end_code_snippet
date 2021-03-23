@@ -10,6 +10,7 @@ Record my front end code snippet
   
 - [CSS](#css)
   - [更改图片颜色](#更改图片颜色)
+  - [css水平垂直居中](#css水平垂直居中)
   
  - [Javascript](#javascript)
    - [Base64与ArrayBuffer的相互转换](#Base64与ArrayBuffer的相互转换)
@@ -228,6 +229,124 @@ sort(originalArray) {
 }
 ```
 [参考链接](https://www.zhangxinxu.com/study/201606/png-icon-color-fill.html)
+
+### css水平垂直居中
+
+* 已知宽高的情况
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .outer {
+        position: relative;
+        width: 400px;
+        height: 600px;
+        background: blue;
+      }
+
+      .inner {
+        position: absolute;
+        width: 200px;
+        height: 300px;
+        background: red;
+        left: 50%;
+        top: 50%;
+        margin: -150px 0 0 -100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="outer">
+      <div class="inner"></div>
+    </div>
+  </body>
+</html>
+
+```
+
+* 宽高未知的内联元素如span
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .outer {
+        width: 400px;
+        height: 600px;
+        /* background: blue; */
+        border: 1px solid red;
+        background-color: transparent;
+        position: relative;
+      }
+
+      .inner {
+        position: absolute;
+        background: red;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="outer">
+      <span class="inner">我想居中显示</span>
+    </div>
+  </body>
+</html>
+```
+
+* 绝对定位的 div 水平垂直居中
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .outer {
+        width: 400px;
+        height: 600px;
+        /* background: blue; */
+        border: 1px solid red;
+        background-color: transparent;
+        position: relative;
+      }
+
+      .inner {
+        position: absolute;
+        background: red;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        width: 200px;
+        height: 300px;
+        margin: auto;
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="outer">
+      <div class="inner">我想居中显示</div>
+    </div>
+  </body>
+</html>
+```
+
+* 图片使用<code>vertical-align: middle;</code>实现居中
+* css3使用Flex居中
 
 ## JavaScript
 
