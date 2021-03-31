@@ -638,7 +638,7 @@ const loadscript = (url: string) => {
 }
 ```
 
-### HTML5 file API加canvas实现图片前端JS压缩并上传
+### HTML5fileAPI加canvas实现图片前端JS压缩并上传
 
 ```html
 <input id="file" type="file">
