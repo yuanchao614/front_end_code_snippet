@@ -34,6 +34,7 @@ Record my front end code snippet
    - [在给定的DOM节点前插入新的节点内容](#在给定的DOM节点前插入新的节点内容)
    - [返回两个数组的交集](#返回两个数组的交集)
    - [JavaScript实现js/css链接的添加](#javaScript实现js或者css链接的添加)
+   - [HTML5 file API加canvas实现图片前端JS压缩并上传](#HTML5 file API加canvas实现图片前端JS压缩并上传)
   
 - [Angular](#angular)
   - [elementRef 为选择器添加class](#elementRef-为选择器添加class)
@@ -635,6 +636,84 @@ const loadscript = (url: string) => {
   script.src = url;
   document.body.appendChild(script);
 }
+```
+
+### HTML5 file API加canvas实现图片前端JS压缩并上传
+
+```html
+<input id="file" type="file">
+```
+
+```js
+var eleFile = document.querySelector('#file');
+
+// 压缩图片需要的一些元素和对象
+var reader = new FileReader(), img = new Image();
+
+// 选择的文件对象
+var file = null;
+
+// 缩放图片需要的canvas
+var canvas = document.createElement('canvas');
+var context = canvas.getContext('2d');
+
+// base64地址图片加载完毕后
+img.onload = function () {
+    // 图片原始尺寸
+    var originWidth = this.width;
+    var originHeight = this.height;
+    // 最大尺寸限制
+    var maxWidth = 400, maxHeight = 400;
+    // 目标尺寸
+    var targetWidth = originWidth, targetHeight = originHeight;
+    // 图片尺寸超过400x400的限制
+    if (originWidth > maxWidth || originHeight > maxHeight) {
+        if (originWidth / originHeight > maxWidth / maxHeight) {
+            // 更宽，按照宽度限定尺寸
+            targetWidth = maxWidth;
+            targetHeight = Math.round(maxWidth * (originHeight / originWidth));
+        } else {
+            targetHeight = maxHeight;
+            targetWidth = Math.round(maxHeight * (originWidth / originHeight));
+        }
+    }
+        
+    // canvas对图片进行缩放
+    canvas.width = targetWidth;
+    canvas.height = targetHeight;
+    // 清除画布
+    context.clearRect(0, 0, targetWidth, targetHeight);
+    // 图片压缩
+    context.drawImage(img, 0, 0, targetWidth, targetHeight);
+    // canvas转为blob并上传
+    canvas.toBlob(function (blob) {
+        // 图片ajax上传
+        var xhr = new XMLHttpRequest();
+        // 文件上传成功
+        xhr.onreadystatechange = function() {
+            if (xhr.status == 200) {
+                // xhr.responseText就是返回的数据
+            }
+        };
+        // 开始上传
+        xhr.open("POST", 'upload.php', true);
+        xhr.send(blob);    
+    }, file.type || 'image/png');
+};
+
+// 文件base64化，以便获知图片原始尺寸
+reader.onload = function(e) {
+    img.src = e.target.result;
+};
+eleFile.addEventListener('change', function (event) {
+    file = event.target.files[0];
+    // 选择的文件是图片
+    if (file.type.indexOf("image") == 0) {
+        reader.readAsDataURL(file);    
+    }
+});
+
+// https://www.zhangxinxu.com/study/201707/js-compress-image-before-upload.html
 ```
 
 
