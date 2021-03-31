@@ -34,7 +34,7 @@ Record my front end code snippet
    - [在给定的DOM节点前插入新的节点内容](#在给定的DOM节点前插入新的节点内容)
    - [返回两个数组的交集](#返回两个数组的交集)
    - [JavaScript实现js/css链接的添加](#javaScript实现js或者css链接的添加)
-   - [HTML5 file API加canvas实现图片前端JS压缩并上传](#HTML5 file API加canvas实现图片前端JS压缩并上传)
+   - [HTML5 file API加canvas实现图片前端JS压缩并上传](#HTML5fileAPI加canvas实现图片前端JS压缩并上传)
   
 - [Angular](#angular)
   - [elementRef 为选择器添加class](#elementRef-为选择器添加class)
