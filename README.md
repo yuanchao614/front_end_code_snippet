@@ -37,6 +37,8 @@ Record my front end code snippet
    - [HTML5 file API加canvas实现图片前端JS压缩并上传](#HTML5fileAPI加canvas实现图片前端JS压缩并上传)
    - [准确判断数据类型](#准确判断数据类型)
    - [解析URL参数为对象](#解析URL参数为对象)
+   - [防抖](#防抖)
+   - [节流](#节流)
   
 - [Angular](#angular)
   - [elementRef 为选择器添加class](#elementRef-为选择器添加class)
@@ -762,6 +764,104 @@ function parseParam(url) {
 }
 
 ![链接}(https://juejin.cn/post/6946022649768181774)
+```
+
+### 防抖
+
+* 支持立即执行；
+* 函数可能有返回值；
+* 支持取消功能；
+
+```js
+function debounce(func, wait, immediate) {
+    var timeout, result;
+    
+    var debounced = function () {
+        var context = this;
+        var args = arguments;
+        
+        if (timeout) clearTimeout(timeout);
+        if (immediate) {
+            // 如果已经执行过，不再执行
+            var callNow = !timeout;
+            timeout = setTimeout(function(){
+                timeout = null;
+            }, wait)
+            if (callNow) result = func.apply(context, args)
+        } else {
+            timeout = setTimeout(function(){
+                func.apply(context, args)
+            }, wait);
+        }
+        return result;
+    };
+
+    debounced.cancel = function() {
+        clearTimeout(timeout);
+        timeout = null;
+    };
+
+    return debounced;
+}
+
+```
+
+Example：
+
+```js
+var setUseAction = debounce(getUserAction, 10000, true);
+// 使用防抖
+node.onmousemove = setUseAction
+
+// 取消防抖
+setUseAction.cancel()
+```
+
+### 节流
+
+支持取消节流；另外通过传入第三个参数，options.leading 来表示是否可以立即执行一次，opitons.trailing 表示结束调用的时候是否还要执行一次，默认都是 true。
+注意设置的时候不能同时将 leading 或 trailing 设置为 false。
+
+```js
+function throttle(func, wait, options) {
+    var timeout, context, args, result;
+    var previous = 0;
+    if (!options) options = {};
+
+    var later = function() {
+        previous = options.leading === false ? 0 : new Date().getTime();
+        timeout = null;
+        func.apply(context, args);
+        if (!timeout) context = args = null;
+    };
+
+    var throttled = function() {
+        var now = new Date().getTime();
+        if (!previous && options.leading === false) previous = now;
+        var remaining = wait - (now - previous);
+        context = this;
+        args = arguments;
+        if (remaining <= 0 || remaining > wait) {
+            if (timeout) {
+                clearTimeout(timeout);
+                timeout = null;
+            }
+            previous = now;
+            func.apply(context, args);
+            if (!timeout) context = args = null;
+        } else if (!timeout && options.trailing !== false) {
+            timeout = setTimeout(later, remaining);
+        }
+    };
+    
+    throttled.cancel = function() {
+        clearTimeout(timeout);
+        previous = 0;
+        timeout = null;
+    }
+    return throttled;
+}
+
 ```
 
 
