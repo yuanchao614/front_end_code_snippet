@@ -35,6 +35,7 @@ Record my front end code snippet
    - [返回两个数组的交集](#返回两个数组的交集)
    - [JavaScript实现js/css链接的添加](#javaScript实现js或者css链接的添加)
    - [HTML5 file API加canvas实现图片前端JS压缩并上传](#HTML5fileAPI加canvas实现图片前端JS压缩并上传)
+   - [准确判断数据类型](#准确判断数据类型)
   
 - [Angular](#angular)
   - [elementRef 为选择器添加class](#elementRef-为选择器添加class)
@@ -714,6 +715,22 @@ eleFile.addEventListener('change', function (event) {
 });
 
 // https://www.zhangxinxu.com/study/201707/js-compress-image-before-upload.html
+```
+
+### 准确判断数据类型
+
+typeof 可以正确识别：Undefined、Boolean、Number、String、Symbol、Function 等类型的数据，但是对于其他的都会认为是 object，比如 Null、Date 等，所以通过 typeof 来判断数据类型会不准确。但是可以使用 Object.prototype.toString 实现
+
+```js
+function typeOf(obj) {
+    let res = Object.prototype.toString.call(obj).split(' ')[1]
+    res = res.substring(0, res.length - 1).toLowerCase()
+    return res
+}
+typeOf([])        // 'array'
+typeOf({})        // 'object'
+typeOf(new Date)  // 'date'
+
 ```
 
 
