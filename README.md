@@ -11,6 +11,7 @@ Record my front end code snippet
 - [CSS](#css)
   - [更改图片颜色](#更改图片颜色)
   - [css水平垂直居中](#css水平垂直居中)
+  - [css画三角形](#css画三角形)
   
  - [Javascript](#javascript)
    - [Base64与ArrayBuffer的相互转换](#Base64与ArrayBuffer的相互转换)
@@ -352,6 +353,20 @@ sort(originalArray) {
 
 * 图片使用<code>vertical-align: middle;</code>实现居中
 * css3使用Flex居中
+
+### css画三角形
+
+```css
+div { 
+    width:0px; 
+    height:0px; 
+    border-top:10px solid red; 
+    border-right:10px solid transparent; 
+    border-bottom:10px solid transparent; 
+    border-left:10px solid transparent; 
+}
+
+```
 
 ## JavaScript
 
