@@ -41,6 +41,7 @@ Record my front end code snippet
    - [防抖](#防抖)
    - [节流](#节流)
    - [数组去重](#数组去重)
+   - [数组打平](#数组打平)
   
 - [Angular](#angular)
   - [elementRef 为选择器添加class](#elementRef-为选择器添加class)
@@ -911,6 +912,30 @@ const unique = (arr) => {
 // filter + indexOf
 
 const unique3 = (arr) => arr.filter((item, index, array) => array.indexOf(item) === index);
+```
+
+### 数组打平
+
+```js
+// ES6 flat方法
+
+flat([1, 2, [3, 4]]) // [1, 2, 3, 4]
+
+// ES6扩展运算符
+const flater = (arr) => {
+        while (arr.some(item => Array.isArray(item))) {
+            arr = [].concat(...arr);
+        }
+        return arr;
+    }
+    
+// ES6 reduce方法
+
+flatten(arr) {
+        return arr.reduce((result, item)=> {
+            return result.concat(Array.isArray(item) ? flatten(item) : item);
+        }, []);
+    }
 ```
 
 
