@@ -40,6 +40,7 @@ Record my front end code snippet
    - [解析URL参数为对象](#解析URL参数为对象)
    - [防抖](#防抖)
    - [节流](#节流)
+   - [数组去重](#数组去重)
   
 - [Angular](#angular)
   - [elementRef 为选择器添加class](#elementRef-为选择器添加class)
@@ -877,6 +878,39 @@ function throttle(func, wait, options) {
     return throttled;
 }
 
+```
+
+### 数组去重
+
+```js
+// ES6
+const unique = (arr) => Array.from(new Set(arr));
+
+// 双重for循环
+
+const unique = (arr) => {
+        const array = [];
+        for (let i = 0; i < arr.length; i++) {
+            if (!array.includes(arr[i])) {
+                arr.push(arr[i]);
+            }
+        }
+    }
+    
+// includes方法
+
+const unique = (arr) => {
+        const array = [];
+        for (let i = 0; i < arr.length; i++) {
+            if (!array.includes(arr[i])) {
+                arr.push(arr[i]);
+            }
+        }
+    }
+    
+// filter + indexOf
+
+const unique3 = (arr) => arr.filter((item, index, array) => array.indexOf(item) === index);
 ```
 
 
