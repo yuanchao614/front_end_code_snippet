@@ -42,6 +42,7 @@ Record my front end code snippet
    - [节流](#节流)
    - [数组去重](#数组去重)
    - [数组打平](#数组打平)
+   - [深拷贝](#深拷贝)
   
 - [Angular](#angular)
   - [elementRef 为选择器添加class](#elementRef-为选择器添加class)
@@ -935,6 +936,39 @@ flatten(arr) {
         return arr.reduce((result, item)=> {
             return result.concat(Array.isArray(item) ? flatten(item) : item);
         }, []);
+    }
+```
+
+### 深拷贝
+
+```js
+
+  isClone(obj) {
+        if (null == obj || 'object' !== typeof obj) {
+            return obj;
+        }
+        if (obj instanceof Date) {
+            const copy = new Date();
+            copy.setTime(obj.getTime());
+            return copy;
+        }
+        if (obj instanceof Array) {
+            const copy = [];
+            for (let i = 0, len = obj.length; i < len; ++i) {
+                copy[i] = this.isClone(obj[i]);
+            }
+            return copy;
+        }
+        if (obj instanceof Object) {
+            const copy = {};
+            for (const attr in obj) {
+                if (obj.hasOwnProperty(attr)) {
+                    copy[attr] = this.isClone(obj[attr]);
+                }
+            }
+            return copy;
+        }
+        throw new Error("Unable to copy obj! Its type isn't supported.");
     }
 ```
 
