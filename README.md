@@ -50,6 +50,9 @@ Record my front end code snippet
   - [Angular项目中使用翻译](#Angular项目中使用翻译)
   - [NGZORRO模态框实现拖拽](#NGZORRO模态框实现拖拽)
   
+- [Http](#http)
+  - [http缓存](#http缓存)
+  
 - [Vue](#vue)
   - [provide/inject](#provide/inject)
   - [Vue3反向代理解决跨域问题](#Vue3反向代理解决跨域问题)
@@ -1047,7 +1050,6 @@ function deepClone(obj, hash = new WeakMap()) {
 ```
 
 
-
 ## Angular
 
 ### 为选择器添加class
@@ -1280,6 +1282,12 @@ componet.thml
 
 </nz-modal>
 ```
+
+## Http
+
+### http缓存
+
+[https://juejin.cn/post/6844903634002509832](https://juejin.cn/post/6844903634002509832)
 
 
 
