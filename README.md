@@ -1288,6 +1288,11 @@ componet.thml
 ### http缓存
 
 [https://juejin.cn/post/6844903634002509832](https://juejin.cn/post/6844903634002509832)
+* 强缓存
+Exprise
+* 弱缓存Last Modified
+* Etag
+* html不缓存解决强弱缓存的缺点
 
 
 
