@@ -1294,6 +1294,10 @@ Exprise
 * Etag
 * html不缓存解决强弱缓存的缺点
 
+### 从浏览器输入URL到页面的呈现发生了什么
+
+[https://juejin.cn/post/6844903878652067853](https://juejin.cn/post/6844903878652067853)
+
 
 
 ## Vue/Vue3
