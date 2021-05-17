@@ -98,10 +98,10 @@ Record my front end code snippet
                 if (originalArray[minIndex] > originalArray[j]) {
                     minIndex = j;
                 }
-            }
-
-            if (minIndex !== i) {
-                [originalArray[i], originalArray[minIndex]] = [originalArray[minIndex], originalArray[i]];
+                
+                if (minIndex !== i) {
+                   [originalArray[i], originalArray[minIndex]] = [originalArray[minIndex], originalArray[i]];
+                }
             }
         }
         return originalArray;
