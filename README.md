@@ -45,6 +45,7 @@ Record my front end code snippet
    - [深拷贝](#深拷贝)
    - [对象数组去重](#对象数组去重)
    - [阿拉伯数字转汉字](#阿拉伯数字转汉字)
+   - [常用正则校验](#常用正则校验)
   
 - [Angular](#angular)
   - [elementRef 为选择器添加class](#elementRef-为选择器添加class)
@@ -1092,6 +1093,22 @@ export const toChinesNum = (num) => {
     noWan = "0" + noWan
   }
   return overWan ? getWan(overWan) + "万" + getWan(noWan) : getWan(num)
+}
+
+```
+
+### 常用正则校验
+
+```js
+const PHONE_REG = /^1[3456789]\d{9}$/ // 手机号
+const EMAIL_REG = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
+
+function isPhone (value) {
+  return PHONE_REG.test(value)
+}
+
+function isEmail (value) {
+  return EMAIL_REG.test(value)
 }
 
 ```
