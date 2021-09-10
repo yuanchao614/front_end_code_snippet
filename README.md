@@ -43,6 +43,8 @@ Record my front end code snippet
    - [数组去重](#数组去重)
    - [数组打平](#数组打平)
    - [深拷贝](#深拷贝)
+   - [对象数组去重](#对象数组去重)
+   - [阿拉伯数字转汉字](#阿拉伯数字转汉字)
   
 - [Angular](#angular)
   - [elementRef 为选择器添加class](#elementRef-为选择器添加class)
@@ -1047,6 +1049,51 @@ function deepClone(obj, hash = new WeakMap()) {
         }
         throw new Error("Unable to copy obj! Its type isn't supported.");
     }
+```
+
+
+### 对象数组去重
+
+```js
+    /**
+     * 对象数组去重
+     * arr 原数组
+     * property根据对象的某一属性去重
+     */
+    const unique = (arr, property) => {
+      const res = new Map()
+      return arr.filter((arr) => !res.has(arr[property]) && res.set(arr[property], 1))
+    }
+```
+
+### 阿拉伯数字转汉字
+
+```js
+/**
+ * 阿拉伯数字转汉字
+ * @param {*} num 数字
+ * @returns 阿拉伯数字对应汉字
+ */
+export const toChinesNum = (num) => {
+  const changeNum = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九']
+  const unit = ["", "十", "百", "千", "万"]
+  num = parseInt(num)
+  const getWan = (temp) => {
+    const strArr = temp.toString().split("").reverse()
+    let newNum = ""
+    for (var i = 0; i < strArr.length; i++) {
+      newNum = (i === 0 && strArr[i] === 0 ? "" : (i > 0 && strArr[i] === 0 && strArr[i - 1] === 0 ? "" : changeNum[strArr[i]] + (strArr[i] === 0 ? unit[0] : unit[i]))) + newNum
+    }
+    return newNum
+  }
+  const overWan = Math.floor(num / 10000)
+  let noWan = num % 10000
+  if (noWan.toString().length < 4) {
+    noWan = "0" + noWan
+  }
+  return overWan ? getWan(overWan) + "万" + getWan(noWan) : getWan(num)
+}
+
 ```
 
 
