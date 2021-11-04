@@ -46,6 +46,7 @@ Record my front end code snippet
    - [对象数组去重](#对象数组去重)
    - [阿拉伯数字转汉字](#阿拉伯数字转汉字)
    - [常用正则校验](#常用正则校验)
+   - [取数组中最小值](#取数组中最小值)
   
 - [Angular](#angular)
   - [elementRef 为选择器添加class](#elementRef-为选择器添加class)
@@ -1112,6 +1113,10 @@ function isEmail (value) {
 }
 
 ```
+
+### 去数组中最小值
+const getMinNum = arr => Math.min.apply(null, arr)
+getMinNum([1, 3, 4, 6]) // 1
 
 
 ## Angular
