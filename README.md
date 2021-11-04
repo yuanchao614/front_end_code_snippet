@@ -1114,7 +1114,7 @@ function isEmail (value) {
 
 ```
 
-### 去数组中最小值
+### 取数组中最小值
 
 ```js
 const getMinNum = arr => Math.min.apply(null, arr)
