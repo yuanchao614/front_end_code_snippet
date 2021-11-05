@@ -1135,6 +1135,47 @@ dayDif(new Date("2021-11-3"), new Date("2022-2-1"))  // 90
 
 ```
 
+### 数字相关代码片段
+
+#### 获取两个整数之间的随机整数
+
+```js
+const random = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
+
+random(2, 24)
+
+```
+
+#### 将一个数字按照指定位进行四舍五入
+
+```js
+const round = (n, d) => Number(Math.round(n + "e" + d) + "e-" + d)
+
+round(1.005, 2) //1.01
+round(1.555, 2) //1.56
+
+```
+
+### 颜色相关代码片段
+
+#### 将RGB转化为十六机制
+
+```js
+const rgbToHex = (r, g, b) => "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+
+rgbToHex(255, 255, 255);  // '#ffffff'
+
+```
+
+#### 获取随机十六进制颜色
+
+```js
+const randomHex = () => `#${Math.floor(Math.random() * 0xffffff).toString(16).padEnd(6, "0")}`;
+
+randomHex();
+
+```
+
 
 
 
