@@ -1499,6 +1499,251 @@ module.exports = {
 }
 ```
 
+### vue3实现滚动公告栏
+
+```vue
+// noticeBar.vue
+<!--
+ * @Author: your name
+ * @Date: 2022-02-09 10:02:36
+ * @LastEditTime: 2022-02-11 14:50:23
+ * @LastEditors: Please set LastEditors
+ * @Description: 横向滚动公告栏
+ * @FilePath: \edu-new-plat-ui\packages\teacher\src\components\NoticeBar\index.vue
+-->
+<template>
+  <transition name="fade">
+    <!--主要内容-->
+    <div class="noticebar" :style="{ backgroundColor: data.backround }">
+      <div style="margin-left:5px"></div>
+         <svg-icon :icon-class="data.icon" :style="{
+          height: data.iconSize ? data.iconSize : '16px',
+          width: data.iconSize ? data.iconSize : '16px',
+          marginTop: '2px',
+          marginRight: '2px'
+        }"></svg-icon>
+      <slot></slot>
+      <div style="margin-right:5px"></div>
+      <div ref="backRef" class="back">
+        <span
+          ref="textRef"
+          :style="{
+            fontSize: data.size ? data.size : '16px',
+            color: data.color ? data.color : '#f60'
+          }"
+          class="text"
+          >{{ data.text ? data.text : "通知内容" }}</span
+        >
+      </div>
+      <div style="margin-right:5px"></div>
+    </div>
+  </transition>
+</template>
+<script>
+import { nextTick, reactive, onMounted } from 'vue'
+export default {
+  props: {
+    options: {
+      type: Object,
+      default () {
+        return {
+          text: "默认"
+        }
+      }
+    }
+  },
+  setup (props) {
+    const state = reactive({
+      backRef: null,
+      textRef: null,
+      speed: props.options.speed, // 速度（单位px/s）
+      backWidth: "", // 父级宽度
+      backHeight: "", // 父级高度
+      wordLength: "", // 文本长度
+      state: 1,
+      firstAnimationTime: "", // 状态一动画效果
+      secondAnimationTime: "", // 状态二动画效果
+      data: props.options
+    })
+
+    // 获取数据
+    const getData = (change = false) => {
+      const style = document.styleSheets[0]
+      state.backWidth = state.backRef.offsetWidth
+      state.backHeight = state.backRef.offsetHeight
+      state.textRef.style.lineHeight = state.backHeight + "px"
+      state.wordLength = state.textRef.offsetWidth
+      console.log(state.backWidth, state.wordLength, 'backWidth::::::::::::::')
+      // 窗口变化时先删除之前的动画再更新公告动画
+      if (change) {
+        // style.deleteRule(0)
+        style.deleteRule(1)
+      }
+      ComputationTime() // 计算时间
+      style.insertRule(
+        `@keyframes firstAnimation {0%   {left:0px}100%  {left:-${state.wordLength}px}}`
+      )
+      style.insertRule(
+        `@keyframes secondAnimation {0%   {left:${state.backWidth}px}100%  {left:-${state.wordLength}px}}`
+      )
+      setTimeout(res => {
+        changeState()
+      }, state.data.delay)
+    }
+
+    // 用速度计算时间（想要保持速度一样，2种状态时间不同需算出）
+    const ComputationTime = () => {
+      state.firstAnimationTime = state.wordLength / state.speed
+      state.secondAnimationTime =
+        (state.wordLength + state.backWidth) / state.speed
+    }
+
+    // 根据状态切换动画
+    const changeState = () => {
+      if (state.state === 1) {
+        state.textRef.style.animation = `firstAnimation ${state.firstAnimationTime}s linear`
+        state.state = 2
+      } else {
+        state.textRef.style.animation = `secondAnimation ${state.secondAnimationTime}s linear infinite`
+      }
+    }
+
+    const Listener = () => {
+      state.textRef.addEventListener(
+        "animationend",
+        res => {
+          changeState()
+        },
+        false
+      )
+    }
+
+    onMounted(() => {
+      Listener()
+      nextTick(() => {
+        getData()
+      })
+      // 窗口变化时更新公告动画
+      window.onresize = () => {
+        return (() => {
+          nextTick(() => {
+            getData(true)
+          })
+        })()
+      }
+    })
+  }
+}
+</script>
+<style lang="scss" scoped>
+.noticebar {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background-color: #fff7cc;
+  .icon {
+    img {
+      height: 100%;
+      width: 100%
+    }
+  }
+  .back {
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 0 auto;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    .text {
+      position: absolute;
+      display: inline-block;
+      padding: 2px 0;
+    }
+  }
+}
+</style>
+```
+
+```vue
+// 使用
+     <template>
+        <!--业务到期时间滚动提示-->
+        <div class="notice-wrap">
+          <div class="father">
+            <notice-bar v-if="showNoticeBar" :options="noticBarOptions" :title="noticBarOptions.text">
+              <span class="tip-title">业务市场到期提示: </span>
+            </notice-bar>
+          </div>
+        </div>
+</template>
+
+<script>
+import { computed, onUnmounted, ref, reactive, onMounted } from 'vue'
+import { getWillExpireAuth } from '@/api/user/auth.js'
+
+export default {
+  name: 'Layout',
+  setup (props, context) {
+    const showNoticeBar = ref(false)
+
+    const noticBarOptions = reactive({
+      text: '', // 通知内容
+      icon: 'warning', // 左侧图标(不需要icon不传)
+      iconSize: '15px', // icon大小（正方形默认16px）
+      size: '12px', // 通知内容文字大小（默认16px）
+      color: '#666666', // 通知内容文字颜色(默认#f60)
+      backround: '#FFF7E6', // 背景颜色(默认#fff7cc)
+      delay: '1000', // 动画延迟时间(默认一秒后开始滚动，单位毫秒)
+      speed: '50' // 滚动速率默认50 (px/s)
+    })
+
+    const getNoticeBarText = async () => {
+      try {
+        showNoticeBar.value = false
+        const res = await getWillExpireAuth()
+        if (res.data) {
+          noticBarOptions.text = res.data
+          showNoticeBar.value = true
+        }
+      } catch {
+        console.log('error')
+      }
+    }
+
+    onMounted(() => {
+      getNoticeBarText()
+    })
+    return {
+      showNoticeBar,
+      noticBarOptions,
+    }
+  }
+}
+</script>
+<style lang="scss" scoped>
+.notice-wrap {
+  // width: 100%;
+  margin-right: 24px;
+  .father {
+    // margin: 150px auto;
+    height: 35px;
+    width: 100%;
+    .tip-title {
+      width: 130px;
+      color: #666666;
+      font-size: 12px;
+    }
+    img {
+      height: 100%;
+      width: 20px;
+    }
+  }
+}
+</style>
+
+```
+
 ## Rx.js
 
 ### rxjs通信与浏览器跨窗口通信
