@@ -63,6 +63,7 @@ Record my front end code snippet
 - [Vue](#vue)
   - [provide/inject](#provide/inject)
   - [Vue3反向代理解决跨域问题](#Vue3反向代理解决跨域问题)
+  - [vue3实现滚动公告栏](#vue3实现滚动公告栏)
   
 - [Rx.js](#rx.js)
   - [rxjs通信与浏览器跨窗口通信](#rxjs通信与浏览器跨窗口通信)
